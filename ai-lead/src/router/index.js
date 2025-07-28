@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // Pages
 import Plans from '../pages/Plans.vue'
+import CheckoutPage from "../pages/checkout-page.vue"
+
 
 const routes = [
   {
@@ -37,14 +39,15 @@ const routes = [
       title: 'Choose Your Plan',
     },
   },
-  {
-  path: '/checkout',
-  name: 'Checkout',
-  component: () => import('../pages/Checkout.vue'),
-  meta: {
+   {
+    path: "/checkout",
+    name: "Checkout",
+    component: () => import('@/pages/checkout-page.vue'),
+    meta: {
     title: 'Checkout',
   },
-},
+  },
+  
 {
   path: '/confirmation',
   name: 'Confirmation',

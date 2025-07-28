@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <!-- Brand Logo/Title -->
       <div class="text-center">
         <h1 class="text-3xl font-bold text-[#0a2342] dark:text-white mb-2">Stitch AI</h1>
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Create your account</h2>
@@ -12,77 +11,70 @@
     </div>
 
     <div class="mt-8 mx-4 sm:mx-auto sm:w-full sm:max-w-md">
-  <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow-lg rounded-2xl sm:px-10 border border-gray-200 dark:border-gray-700">
-        <form @submit.prevent="handleSignUp" class="space-y-6">
-          <!-- Full Name Field -->
+      <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow-lg rounded-2xl sm:px-10 border border-gray-200 dark:border-gray-700">
+        <form @submit.prevent="handleSignUp" class="space-y-6" novalidate>
+          <!-- Full Name -->
           <div>
-            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Full name
-            </label>
+            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full name</label>
             <input
               id="fullName"
               v-model="form.fullName"
               type="text"
               autocomplete="name"
-              required
               :class="[
-                'block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342] transition-colors',
+                'block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342]',
                 fullNameError ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
                 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
               ]"
               placeholder="Enter your full name"
               @blur="validateFullName"
+              @input="fullNameError = ''"
+              required
             />
             <p v-if="fullNameError" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ fullNameError }}</p>
           </div>
 
-          <!-- Email Field -->
+          <!-- Email -->
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Email address
-            </label>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email address</label>
             <input
               id="email"
               v-model="form.email"
               type="email"
               autocomplete="email"
-              required
               :class="[
-                'block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342] transition-colors',
+                'block w-full px-3 py-3 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342]',
                 emailError ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
                 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
               ]"
               placeholder="Enter your email"
               @blur="validateEmail"
+              @input="emailError = ''"
+              required
             />
             <p v-if="emailError" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ emailError }}</p>
           </div>
 
-          <!-- Password Field -->
+          <!-- Password -->
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Password
-            </label>
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
             <div class="relative">
               <input
                 id="password"
                 v-model="form.password"
                 :type="showPassword ? 'text' : 'password'"
                 autocomplete="new-password"
-                required
                 :class="[
-                  'block w-full px-3 py-3 pr-10 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342] transition-colors',
+                  'block w-full px-3 py-3 pr-10 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342]',
                   passwordError ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
                   'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                 ]"
                 placeholder="Create a password"
                 @blur="validatePassword"
+                @input="passwordError = ''"
+                required
               />
-              <button
-                type="button"
-                @click="showPassword = !showPassword"
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              >
+              <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" tabindex="-1">
                 <svg v-if="!showPassword" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -93,145 +85,72 @@
               </button>
             </div>
             <p v-if="passwordError" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ passwordError }}</p>
-            
-            <!-- Password Strength Indicator -->
             <div v-if="form.password" class="mt-2">
               <div class="flex space-x-1">
-                <div 
-                  v-for="i in 4" 
-                  :key="i"
-                  :class="[
-                    'h-1 w-full rounded-full transition-colors',
-                    passwordStrength >= i ? getStrengthColor(passwordStrength) : 'bg-gray-200 dark:bg-gray-600'
-                  ]"
-                ></div>
+                <div v-for="i in 4" :key="i" :class="[ 'h-1 w-full rounded-full', passwordStrength >= i ? getStrengthColor(passwordStrength) : 'bg-gray-200 dark:bg-gray-600' ]"></div>
               </div>
-              <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">
-                {{ getStrengthText(passwordStrength) }}
-              </p>
+              <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">{{ getStrengthText(passwordStrength) }}</p>
             </div>
           </div>
 
-          <!-- Confirm Password Field -->
+          <!-- Confirm Password -->
           <div>
-            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Confirm password
-            </label>
-            <div class="relative">
-              <input
-                id="confirmPassword"
-                v-model="form.confirmPassword"
-                :type="showConfirmPassword ? 'text' : 'password'"
-                autocomplete="new-password"
-                required
-                :class="[
-                  'block w-full px-3 py-3 pr-10 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342] transition-colors',
-                  confirmPasswordError ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
-                  'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
-                ]"
-                placeholder="Confirm your password"
-                @blur="validateConfirmPassword"
-              />
-              <button
-                type="button"
-                @click="showConfirmPassword = !showConfirmPassword"
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                <svg v-if="!showConfirmPassword" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                <svg v-else class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                </svg>
-              </button>
-            </div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm password</label>
+            <input
+              id="confirmPassword"
+              v-model="form.confirmPassword"
+              :type="showConfirmPassword ? 'text' : 'password'"
+              :class="[
+                'block w-full px-3 py-3 pr-10 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0a2342] focus:border-[#0a2342]',
+                confirmPasswordError ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
+                'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
+              ]"
+              @blur="validateConfirmPassword"
+              @input="confirmPasswordError = ''"
+              required
+            />
             <p v-if="confirmPasswordError" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ confirmPasswordError }}</p>
           </div>
 
-          <!-- Terms & Privacy Checkbox -->
+          <!-- Terms -->
           <div class="flex items-start">
             <div class="flex items-center h-5">
-              <input
-                id="terms"
-                v-model="form.acceptTerms"
-                type="checkbox"
-                required
-                class="h-4 w-4 text-[#0a2342] focus:ring-[#0a2342] border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
-              />
+              <input id="terms" v-model="form.acceptTerms" type="checkbox" class="h-4 w-4 text-[#0a2342] border-gray-300 dark:border-gray-600 rounded" />
             </div>
             <div class="ml-3 text-sm">
               <label for="terms" class="text-gray-700 dark:text-gray-300">
-                I agree to the 
-                <a href="#" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                  Terms of Service
-                </a>
-                and 
-                <a href="#" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                  Privacy Policy
-                </a>
+                I agree to the
+                <a href="#" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">Terms of Service</a>
+                and
+                <a href="#" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">Privacy Policy</a>
               </label>
+              <p v-if="termsError" class="text-sm text-red-600 dark:text-red-400 mt-1">You must accept the terms</p>
             </div>
           </div>
 
-          <!-- Sign Up Button -->
+          <!-- Submit Button -->
           <div>
-            <router-link
-            to="/plans"
+            <button
               type="submit"
               :disabled="isLoading || !form.acceptTerms"
-              class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#0a2342] hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0a2342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="group relative w-full flex justify-center items-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#0a2342] hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0a2342] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span v-if="isLoading" class="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
               </span>
               {{ isLoading ? 'Creating account...' : 'Create account' }}
-            </router-link>
-          </div>
-
-          <!-- OAuth Divider -->
-          <div class="mt-6">
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300 dark:border-gray-600" />
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
-              </div>
-            </div>
-
-            <!-- Google OAuth Button -->
-            <div class="mt-6">
-              <button
-                type="button"
-                @click="handleGoogleSignUp"
-                class="w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-              >
-                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                Continue with Google
-              </button>
-            </div>
+            </button>
           </div>
         </form>
 
-        <!-- Sign In Link -->
-        <div class="mt-6">
-          <div class="text-center">
-            <span class="text-sm text-gray-600 dark:text-gray-400">
-              Already have an account?
-              <a href="/login" @click="$emit('switch-to-signin')" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                Sign in
-              </a>
-            </span>
-          </div>
+        <div class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          Already have an account?
+          <a href="/login" @click="$emit('switch-to-signin')" class="font-medium text-[#0a2342] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+            Sign in
+          </a>
         </div>
       </div>
     </div>
@@ -239,10 +158,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed , onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 
-// Form data
 const form = reactive({
   fullName: '',
   email: '',
@@ -251,7 +171,6 @@ const form = reactive({
   acceptTerms: false
 })
 
-// Form state
 const isLoading = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
@@ -259,123 +178,90 @@ const fullNameError = ref('')
 const emailError = ref('')
 const passwordError = ref('')
 const confirmPasswordError = ref('')
+const termsError = ref('')
 
-// Password strength calculation
 const passwordStrength = computed(() => {
-  const password = form.password
+  const pwd = form.password
   let strength = 0
-  
-  if (password.length >= 8) strength++
-  if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++
-  if (/\d/.test(password)) strength++
-  if (/[^a-zA-Z\d]/.test(password)) strength++
-  
+  if (pwd.length >= 8) strength++
+  if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) strength++
+  if (/\d/.test(pwd)) strength++
+  if (/[^a-zA-Z\d]/.test(pwd)) strength++
   return strength
 })
-onMounted(() => {
-window.scrollTo({ top: 0, behavior: 'smooth' })
 
-})
-  
-
-
-// Validation functions
-const validateFullName = () => {
-  if (!form.fullName.trim()) {
-    fullNameError.value = 'Full name is required'
-  } else if (form.fullName.trim().length < 2) {
-    fullNameError.value = 'Full name must be at least 2 characters'
-  } else {
-    fullNameError.value = ''
-  }
-}
-
-const validateEmail = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!form.email) {
-    emailError.value = 'Email is required'
-  } else if (!emailRegex.test(form.email)) {
-    emailError.value = 'Please enter a valid email address'
-  } else {
-    emailError.value = ''
-  }
-}
-
-const validatePassword = () => {
-  if (!form.password) {
-    passwordError.value = 'Password is required'
-  } else if (form.password.length < 8) {
-    passwordError.value = 'Password must be at least 8 characters'
-  } else {
-    passwordError.value = ''
-  }
-}
-
-const validateConfirmPassword = () => {
-  if (!form.confirmPassword) {
-    confirmPasswordError.value = 'Please confirm your password'
-  } else if (form.password !== form.confirmPassword) {
-    confirmPasswordError.value = 'Passwords do not match'
-  } else {
-    confirmPasswordError.value = ''
-  }
-}
-
-// Helper functions
 const getStrengthColor = (strength) => {
-  switch (strength) {
-    case 1: return 'bg-red-500'
-    case 2: return 'bg-yellow-500'
-    case 3: return 'bg-blue-500'
-    case 4: return 'bg-green-500'
-    default: return 'bg-gray-200'
-  }
+  return ['bg-gray-200', 'bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500'][strength] || 'bg-gray-200'
 }
 
 const getStrengthText = (strength) => {
-  switch (strength) {
-    case 1: return 'Weak password'
-    case 2: return 'Fair password'
-    case 3: return 'Good password'
-    case 4: return 'Strong password'
-    default: return 'Enter a password'
-  }
+  return ['Enter a password', 'Weak password', 'Fair password', 'Good password', 'Strong password'][strength] || ''
 }
 
-// Form handlers
+const validateFullName = () => {
+  fullNameError.value = !form.fullName.trim()
+    ? 'Full name is required'
+    : form.fullName.length < 2
+    ? 'Full name must be at least 2 characters'
+    : ''
+}
+
+const validateEmail = () => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  emailError.value = !form.email
+    ? 'Email is required'
+    : !regex.test(form.email)
+    ? 'Please enter a valid email address'
+    : ''
+}
+
+const validatePassword = () => {
+  passwordError.value = !form.password
+    ? 'Password is required'
+    : form.password.length < 8
+    ? 'Password must be at least 8 characters'
+    : ''
+}
+
+const validateConfirmPassword = () => {
+  confirmPasswordError.value = !form.confirmPassword
+    ? 'Please confirm your password'
+    : form.password !== form.confirmPassword
+    ? 'Passwords do not match'
+    : ''
+}
+
+const validateTerms = () => {
+  termsError.value = !form.acceptTerms ? 'You must accept the terms' : ''
+}
+
 const handleSignUp = async () => {
   validateFullName()
   validateEmail()
   validatePassword()
   validateConfirmPassword()
-  
-  if (fullNameError.value || emailError.value || passwordError.value || confirmPasswordError.value) {
-    return
-  }
+  validateTerms()
 
-  if (!form.acceptTerms) {
-    return
-  }
+  if (
+    fullNameError.value ||
+    emailError.value ||
+    passwordError.value ||
+    confirmPasswordError.value ||
+    termsError.value
+  ) return
 
   isLoading.value = true
-  
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    console.log('Sign up attempt:', form)
-    // Handle successful sign up
+    await new Promise((resolve) => setTimeout(resolve, 2000)) // simule l'API
+    console.log('User registered:', form)
+    router.push('/plans') // ✅ redirection ici
   } catch (error) {
-    console.error('Sign up error:', error)
+    console.error('Sign up failed', error)
   } finally {
     isLoading.value = false
   }
 }
 
-const handleGoogleSignUp = () => {
-  console.log('Google sign up clicked')
-  // Handle Google OAuth
-}
-
-// Emit events for parent component
 defineEmits(['switch-to-signin'])
+onMounted(() => window.scrollTo({ top: 0, behavior: 'smooth' }))
 </script>

@@ -76,6 +76,8 @@ watchEffect(() => {
   }
 })
 
+
+
 const savedIndex = localStorage.getItem('currentProgressStep')
 if (savedIndex !== null && !isNaN(savedIndex)) {
   currentIndex.value = parseInt(savedIndex)
